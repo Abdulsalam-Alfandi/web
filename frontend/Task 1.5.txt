@@ -1,0 +1,22 @@
+What changed, and why?
+We can see different values of performance, accessibility, best practices, and SEO. The performance in SSR for example looks different than CSR. 
+SSR is better than CSR, because Instead of waiting for JavaScript to download and run, the server directly renders an HTML document upon receiving a request from the browser.
+There is also a PWA impact, which added overhead in SSR (e.g., mobile SSR with PWA: TBT(Total Blocking Time) 480ms vs. 170ms without PWA) due to service worker registration/caching logic, but less severe than in CSR.  
+
+Did the new features improve or worsen performance, accessibility, best practices, or SEO?
+- Performance:
+  - SSR improved performance(especially mobile), reducing TBT and First Contentful Paint (FCP).  
+  - PWA slightly worsened performance in SSR (due to service worker setup) but less than in CSR.  
+
+- Accessibility/SEO/Best Practices:  
+  - No changes: All versions scored Accessibility 100, SEO 83, and similar Best Practices (78–79).  
+
+Did recommendations appear or disappear? 
+The recommendations appear and disappear at the same time, for example PWA-related issues appear in PWA versions:  
+- Avoid requesting notification permission on page load.
+- Avoid requesting geolocation permission without user context.
+- Properly size images" (e.g., mobile SSR with PWA: 93KiB savings).
+The recommendations that disappears are for example in SSR versions:
+- "Minimize main-thread work" disappears due to reduced client-side JS.
+- "Eliminate render-blocking resources" is no longer flagged (rendering happens server-side).
+

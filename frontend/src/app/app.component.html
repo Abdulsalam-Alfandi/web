@@ -1,0 +1,31 @@
+<!-- Navigation Bar -->
+<nav class="navbar">
+  <div class="nav-container">
+    <!-- Logo and App Name -->
+    <div class="nav-brand">
+      <div class="logo">📱</div>
+      <span class="app-name">VideoShare</span>
+    </div>
+
+    <!-- Navigation Links -->
+    <div class="nav-links">
+      <a routerLink="/feed" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">Feed</span>
+      </a>
+      <a routerLink="/upload" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">📤</span>
+        <span class="nav-text">Upload</span>
+      </a>
+      <a routerLink="/user" routerLinkActive="active" class="nav-link">
+        <span class="nav-icon">👤</span>
+        <span class="nav-text">User</span>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- Router Outlet for Components -->
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

@@ -1,0 +1,120 @@
+<div
+  class="feed-container"
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)"
+>
+  <div class="video-wrapper">
+    <!-- Main Video -->
+    <video
+      #videoPlayer
+      [src]="currentVideo?.url"
+      autoplay
+      muted
+      loop
+      playsinline
+      class="feed-video"
+    ></video>
+
+    <!-- Play/Pause Overlay (center tap) -->
+    <button
+      class="play-pause-overlay"
+      (click)="toggleVideoPlayPause(videoPlayer)"
+    >
+      <div class="play-pause-icon" [class.show]="isPaused">
+        {{ isPaused ? '▶️' : '⏸️' }}
+      </div>
+    </button>
+
+    <!-- Right Side Controls -->
+    <div class="video-overlay-controls">
+      <!-- Like Button -->
+      <div class="control-item">
+        <button
+          class="overlay-btn"
+          (click)="voteUp()"
+          [style.background]="currentVideo?.userVote === 'up' ? '#ff3040' : 'rgba(0, 0, 0, 0.6)'"
+        >
+          👍
+        </button>
+        <div class="vote-count">{{ upCount }}</div>
+      </div>
+
+      <!-- Dislike Button -->
+      <div class="control-item">
+        <button
+          class="overlay-btn"
+          (click)="voteDown()"
+          [style.background]="currentVideo?.userVote === 'down' ? '#ff3040' : 'rgba(0, 0, 0, 0.6)'"
+        >
+          👎
+        </button>
+        <div class="vote-count">{{ downCount }}</div>
+      </div>
+
+      <!-- Comments Button -->
+      <div class="control-item">
+        <button
+          class="overlay-btn"
+          (click)="toggleComments()"
+        >
+          💬
+        </button>
+        <div class="vote-count">{{ videoService.getComments(currentVideo!.id).length }}</div>
+      </div>
+
+      <!-- Share Button -->
+      <div class="control-item">
+        <button
+          class="overlay-btn"
+          (click)="shareVideo()"
+        >
+          🔗
+        </button>
+      </div>
+    </div>
+
+    <!-- Bottom Video Info Overlay -->
+    <div class="video-info-overlay">
+      <h2 class="video-title">{{ currentVideo?.title }}</h2>
+    </div>
+  </div>
+
+  <!-- Comments Section -->
+  <div
+    class="comments-section"
+    [class.visible]="commentsVisible"
+  >
+    <div class="comments-header">
+      <h3>Comments</h3>
+      <button class="close-comments" (click)="toggleComments()">×</button>
+    </div>
+
+    <div class="comments-list">
+      <div
+        *ngFor="let c of videoService.getComments(currentVideo!.id)"
+        class="comment"
+      >
+        <img [src]="c.avatarUrl" class="avatar" alt="{{ c.username }}" />
+        <div class="comment-content">
+          <div class="username">{{ c.username }}</div>
+          <p class="comment-text">{{ c.text }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-comment">
+      <input
+        type="text"
+        [(ngModel)]="newCommentText"
+        placeholder="Add a comment..."
+        (keyup.enter)="postComment()"
+      />
+      <button
+        (click)="postComment()"
+        [disabled]="!newCommentText.trim()"
+      >
+        Post
+      </button>
+    </div>
+  </div>
+</div>
